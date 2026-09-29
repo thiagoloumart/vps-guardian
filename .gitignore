@@ -1,0 +1,6 @@
+scanner/config.json
+scanner/state/
+scanner/logs/
+scanner/reports/
+panel/actions.log
+__pycache__/

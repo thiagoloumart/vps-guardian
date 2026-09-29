@@ -1,0 +1,10 @@
+[Unit]
+Description=Dispara o Faxina watchdog a cada 12 min (independente do cron)
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=12min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

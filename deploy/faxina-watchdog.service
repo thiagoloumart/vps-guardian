@@ -1,0 +1,7 @@
+[Unit]
+Description=Faxina watchdog — vigia o monitor (quem vigia o vigia)
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/root/loop-hunter/watchdog.sh

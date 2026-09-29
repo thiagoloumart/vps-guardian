@@ -1,0 +1,130 @@
+{
+  "_doc": "VPS Guardian config. Detection is 100% local reads, ZERO external requests. Only notify.sh touches the network.",
+  "vps_name": "AUTO",
+  "resume_code": "guardian",
+  "panel_url": "http://guardian.example.com",
+  "heartbeats": {
+    "main": [
+      {
+        "name": "daily-pipeline",
+        "log": "/root/my-pipeline/logs/cron.log",
+        "max_age_h": 30,
+        "tipo": "pipeline"
+      },
+      {
+        "name": "db-backup",
+        "log": "/root/my-app/logs/backup.log",
+        "max_age_h": 30,
+        "tipo": "backup"
+      }
+    ]
+  },
+  "channel": {
+    "telegram_conf": "/root/.secrets/telegram.env",
+    "instance": "primary",
+    "fallback_instance": "backup-instance",
+    "number": "YOUR_WHATSAPP_GROUP_JID_OR_NUMBER",
+    "api": "https://evolution.example.com/message/sendText",
+    "apikey": "PUT_YOUR_EVOLUTION_APIKEY_HERE"
+  },
+  "log_globs": [
+    "/root/*/logs/*.log",
+    "/root/*/*.log",
+    "/root/scripts/*/*.log",
+    "/var/www/*/logs/*.log",
+    "/var/www/*/*.log"
+  ],
+  "log_exclude_substr": [
+    "/loop-hunter/"
+  ],
+  "error_patterns": [
+    "rate.?limit",
+    "Rate limited",
+    "429",
+    "Too Many Requests",
+    "invalid_grant",
+    "\\b401\\b",
+    "\\b403\\b",
+    "Unauthorized",
+    "ECONNREFUSED",
+    "ETIMEDOUT",
+    "ENOTFOUND",
+    "EAI_AGAIN",
+    "Traceback",
+    "UnhandledPromiseRejection",
+    "FATAL",
+    "panic:",
+    "Max retries",
+    "retrying",
+    "retry in",
+    "backoff",
+    "reconnect"
+  ],
+  "counter_state_globs": [
+    "/root/*/data/*state*.json",
+    "/root/*/*state*.json",
+    "/root/*/state.json"
+  ],
+  "counter_keys": [
+    "consecutive",
+    "consec",
+    "fail",
+    "error",
+    "retr",
+    "attempt"
+  ],
+  "thresholds": {
+    "cpu_sustained_pct": 70,
+    "cpu_critical_pct": 90,
+    "log_churn_bytes_interval": 1048576,
+    "log_err_lines_interval": 25,
+    "log_err_lines_critical": 150,
+    "dup_process_count": 8,
+    "pm2_restart_delta": 5,
+    "pm2_restart_total": 30,
+    "systemd_nrestarts": 8,
+    "counter_value": 10,
+    "counter_value_critical": 100,
+    "disk_pct": 90,
+    "conn_same_remote": 40
+  },
+  "cpu_whitelist_comm": [
+    "npm",
+    "node-gyp",
+    "ffmpeg",
+    "tsc",
+    "esbuild",
+    "webpack",
+    "rsync",
+    "gzip",
+    "tar",
+    "cc1",
+    "cc1plus",
+    "ld",
+    "git",
+    "dpkg",
+    "apt",
+    "unzip",
+    "7z"
+  ],
+  "kill_critical_whitelist": [
+    "systemd",
+    "sshd",
+    "ssh",
+    "nginx",
+    "postgres",
+    "dockerd",
+    "containerd",
+    "tailscaled",
+    "init",
+    "pm2",
+    "God",
+    "cron",
+    "fail2ban-server",
+    "PM2"
+  ],
+  "max_log_files": 250,
+  "max_log_slice_bytes": 2097152,
+  "alert_cooldown_sec": 21600,
+  "alert_min_severity": "high"
+}
